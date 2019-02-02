@@ -1,0 +1,22 @@
+# npm & node:
+npm-debug.log.*
+node_modules/
+npm-debug.log
+
+# Webstorm:
+.idea/*
+!.idea/codeStyleSettings.xml
+!.idea/typescript-compiler.xml
+!.idea/inspectionProfiles
+!.idea/jsLibraryMappings.xml
+!.idea/misc.xml
+!.idea/runConfigurations
+!.idea/libraries
+!.idea/codeStyles
+
+# MacOS:
+.DS_STORE
+
+# Built stuff:
+built/
+
