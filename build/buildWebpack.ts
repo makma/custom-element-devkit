@@ -1,5 +1,9 @@
 import fs from 'fs';
-import webpack, { Entry, Output, Stats } from 'webpack';
+import webpack, {
+  Entry,
+  Output,
+  Stats,
+} from 'webpack';
 import { webpackConfig } from './webpack.config';
 import path from 'path';
 import Handler = webpack.MultiCompiler.Handler;
@@ -37,14 +41,17 @@ function getEntries(): Entry {
   const customElementsDir = fs.readdirSync(PathToCustomElements);
   const webpackEntries = customElementsDir.reduce((entries, elementName) => {
     const elementDirFullPath = path.join(PathToCustomElements, elementName);
-    const elementFiles = fs.readdirSync(elementDirFullPath);
-    const tsFiles = elementFiles
-      .filter(filename => filename.endsWith('.ts') || filename.endsWith('.tsx'))
-      .map(filename => path.join(elementDirFullPath, filename));
-    return {
-      ...entries,
-      [elementName]: tsFiles
-    };
+    if (fs.lstatSync(elementDirFullPath).isDirectory()) {
+      const elementFiles = fs.readdirSync(elementDirFullPath);
+      const tsFiles = elementFiles
+        .filter(filename => filename.endsWith('.ts') || filename.endsWith('.tsx'))
+        .map(filename => path.join(elementDirFullPath, filename));
+      return {
+        ...entries,
+        [elementName]: tsFiles,
+      };
+    }
+    return entries;
   }, {});
 
   return webpackEntries;

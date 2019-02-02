@@ -53,6 +53,5 @@
     "webpack": "^4.29.0",
     "x-data-spreadsheet": "^1.0.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
