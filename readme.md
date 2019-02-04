@@ -39,4 +39,12 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
 1) The stylesheet is in '.less' or '.css' format and is imported from within the typescript code.
 
-   I might add sass support in the future. I know it's way cooler than less, but I needed less for the x-data-spreadsheet package. 
+   I might add stylus support in the future. I know it's way cooler than less, but I needed less for the x-data-spreadsheet package. 
+
+## Plans
+1) Add options to inline CSS and JS into server's HTML output
+1) Add compilation into HTML
+   1) With or without CSS and JS inlining
+1) Add stylus support
+1) Better usage guide
+1) Hot reload if possible
