@@ -4,7 +4,7 @@
   "description": "A custom element devkit for the best headless CMS in the cloud.",
   "main": "server/index.ts",
   "scripts": {
-    "start-server-build-once": "ts-node server/index.ts",
+    "build": "ts-node server/index.ts -c",
     "start": "ts-node server/index.ts",
     "start-watcher": "ts-node server/index.ts -w",
     "tslint": "tslint --project tsconfig.json -e \"./**/test/**\" -e \"./node_modules/**\" \"./**/*.ts?(x)\"",

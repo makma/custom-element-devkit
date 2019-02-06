@@ -15,8 +15,6 @@ If you're familiar with the CMS, but would like to know more about custom elemen
 
 `npm run start-watcher` will start the node server and a compiler watching for changes in the files compiled for the client-side. This is useful when you're trying to create or debug your custom elements.
 
-`npm run start-server-build-once` will start the server which will compile all the elements and make them ready to be served.
-
 If you leave this running on a publicly accessible server, you'll be able to use all the elements served by the server in the cloud. The URL is in this format: `<the root to your instance>/custom-elements/<element name>`.
 
 What `<element name>` stands for is dealt with below, read on.
