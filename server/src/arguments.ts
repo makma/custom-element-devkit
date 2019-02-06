@@ -10,6 +10,7 @@ export type CmdArguments = {
 };
 
 const argParser = commander
+  .usage('npm start -- [options]')
   .option('-b, --build-once', 'Compile all custom elements scripts and styles.', false)
   .option('-c, --compile', 'Compile all custom elements into one HTML file to be then served as a static file.', false)
   .option('-h, --server', 'Start the https server.', false)
@@ -32,5 +33,11 @@ export const reportArgConflicts = (args: CmdArguments): void => {
   }
   if (args.buildOnce && args.watch) {
     console.warn(`The option '-b, --build-once' will have no effect in presence of option '-w, --watch'`);
+  }
+
+  const hasAnyOptionBeenSpecified = Object.keys(argParser.opts()).reduce((anOptionSpecified, optionName) => anOptionSpecified || args[optionName], false);
+
+  if (!hasAnyOptionBeenSpecified) {
+    argParser.outputHelp();
   }
 };

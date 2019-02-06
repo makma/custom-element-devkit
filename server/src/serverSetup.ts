@@ -3,6 +3,7 @@ import fs from 'fs';
 import https from 'https';
 import { prettyString } from '../../common/utils/prettyPrint';
 import { CmdArguments } from './arguments';
+import { getRenderArgs } from './build/compilePugToHTML';
 import { CustomElementInformation } from './build/customElementInfo';
 
 
@@ -41,14 +42,9 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
         }));
       }
       else {
-        const stylesheet = fs.readFileSync(elementInfo.stylesheetFilePath);
         console.log(elementInfo.viewPath);
 
-        res.render(elementInfo.viewPath, {
-          stylesheet,
-          stylesheetSrc: elementInfo.stylesheetSrc,
-          scriptSrc: elementInfo.scriptSrc,
-        });
+        res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args));
       }
     }
   });

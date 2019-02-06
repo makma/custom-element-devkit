@@ -11,7 +11,7 @@ If you're familiar with the CMS, but would like to know more about custom elemen
 
 ### Scripts
 
-`npm start` will launch the server in default configuration. For more info about configuration run `npm start -- --help` (For `npm` wants the argument vector for the command it's running after `--`.)
+`npm start` will start the server script in default configuration. For more info about configuration run `npm start -- --help` (For `npm` wants the argument vector for the command it's running after `--`.)
 
 `npm run start-watcher` will start the node server and a compiler watching for changes in the files compiled for the client-side. This is useful when you're trying to create or debug your custom elements.
 
@@ -43,8 +43,8 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
 ## Plans
 1) Add options to inline CSS and JS into server's HTML output
-1) Add compilation into HTML
-   1) With or without CSS and JS inlining
+1) Add compilation into HTML - DONE
+   1) With or without CSS and JS inlining - DONE
 1) Add stylus support
 1) Better usage guide
 1) Hot reload if possible

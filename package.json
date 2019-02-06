@@ -6,7 +6,7 @@
   "scripts": {
     "build": "ts-node server/index.ts -c",
     "start": "ts-node server/index.ts",
-    "start-watcher": "ts-node server/index.ts -w",
+    "start-watcher": "ts-node server/index.ts -wh",
     "tslint": "tslint --project tsconfig.json -e \"./**/test/**\" -e \"./node_modules/**\" \"./**/*.ts?(x)\"",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "typewatch": "tsc --noEmit --project tsconfig.json -w"
