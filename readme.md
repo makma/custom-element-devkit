@@ -42,7 +42,7 @@ Put very simply, just follow the example. The "sheets" elements was the first on
    I might add stylus support in the future. I know it's way cooler than less, but I needed less for the x-data-spreadsheet package. 
 
 ## Plans
-1) Add options to inline CSS and JS into server's HTML output
+1) Add options to inline CSS and JS into server's HTML output - DONE
 1) Add compilation into HTML - DONE
    1) With or without CSS and JS inlining - DONE
 1) Add stylus support
