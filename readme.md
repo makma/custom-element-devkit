@@ -11,7 +11,9 @@ If you're familiar with the CMS, but would like to know more about custom elemen
 
 ### Scripts
 
-`npm start` will start the node server and a compiler watching for changes in the files compiled for the client-side. This is useful when you're trying to create or debug your custom elements.
+`npm start` will launch the server in default configuration. For more info about configuration run `npm start -- --help` (For `npm` wants the argument vector for the command it's running after `--`.)
+
+`npm run start-watcher` will start the node server and a compiler watching for changes in the files compiled for the client-side. This is useful when you're trying to create or debug your custom elements.
 
 `npm run start-server-build-once` will start the server which will compile all the elements and make them ready to be served.
 

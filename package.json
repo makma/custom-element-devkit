@@ -1,11 +1,12 @@
 {
-  "name": "kentico-cloud-spread-sheed-element",
+  "name": "custom-element-devkit",
   "version": "0.0.1",
-  "description": "A custom element for the best headless CMS in the cloud.",
-  "main": "index.js",
+  "description": "A custom element devkit for the best headless CMS in the cloud.",
+  "main": "server/index.ts",
   "scripts": {
     "start-server-build-once": "ts-node server/index.ts",
-    "start": "ts-node server/index.ts -w",
+    "start": "ts-node server/index.ts",
+    "start-watcher": "ts-node server/index.ts -w",
     "tslint": "tslint --project tsconfig.json -e \"./**/test/**\" -e \"./node_modules/**\" \"./**/*.ts?(x)\"",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "typewatch": "tsc --noEmit --project tsconfig.json -w"
@@ -15,6 +16,10 @@
     "kentico cloud",
     "custom element"
   ],
+  "engines": {
+    "npm": "6.1.0",
+    "node": "10.6.0"
+  },
   "author": "Viclick",
   "license": "ISC",
   "devDependencies": {
@@ -53,5 +58,7 @@
     "webpack": "^4.29.0",
     "x-data-spreadsheet": "^1.0.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "commander": "^2.19.0"
+  }
 }

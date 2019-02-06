@@ -2,9 +2,18 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import https from 'https';
-import { getBuiltCssPath, getBuiltCssSrc, getBuiltJsSrc } from '../build/buildWebpack';
+import {
+  getBuiltCssPath,
+  getBuiltCssSrc,
+  getBuiltJsSrc,
+} from './build/buildWebpack';
 
-export const setupServer = (): void => {
+export interface ICompilationArgs {
+  readonly inlineJs: boolean;
+  readonly inlineStyles: boolean;
+}
+
+export const setupServer = (_compilationArgs: ICompilationArgs): void => {
   const app = express();
 
   app.set('view engine', 'pug');
@@ -32,7 +41,7 @@ export const setupServer = (): void => {
       res.send(JSON.stringify({
         problem: 'The referred custom element does not exist.',
         path: req.path,
-        pathOfTheViewNotFound: `${viewPath}.pug`
+        pathOfTheViewNotFound: `${viewPath}.pug`,
       }, null, 4));
     }
     else {
@@ -54,7 +63,7 @@ export const setupServer = (): void => {
 
   https.createServer({
     key: fs.readFileSync('server/credentials/server.key'),
-    cert: fs.readFileSync('server/credentials/server.cert')
+    cert: fs.readFileSync('server/credentials/server.cert'),
   }, app)
     .listen(3000, function () {
       console.log('Example app listening on port 3000! Go to https://localhost:3000/');

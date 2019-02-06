@@ -1,13 +1,21 @@
 import { Stats } from 'webpack';
-import { buildOnce, setupFileWatcher } from '../build/buildWebpack';
-import { setupServer } from './serverSetup';
+import { prettyString } from '../common/utils/prettyPrint';
+import { getArguments } from './src/arguments';
+import {
+  buildOnce,
+  setupFileWatcher,
+} from './src/build/buildWebpack';
+import {
+  ICompilationArgs,
+  setupServer,
+} from './src/serverSetup';
 import { once } from '../common/utils/once';
 
 const logCompiledEntryPoint = (stats: Stats): void => {
   console.log('\n\nCompiled successfully: ');
   stats.compilation.entrypoints.forEach(entry => {
     const chunk = entry.runtimeChunk;
-    console.log(`${chunk.name}: ${JSON.stringify(chunk.files, null, 2)}`);
+    console.log(`${chunk.name}: ${prettyString(chunk.files)}`);
   });
 };
 
@@ -16,18 +24,19 @@ const logCompilationErrors = (stats: Stats): void => {
   console.log(stats.compilation.errors);
 };
 
-async function compileAndOutput() {
+async function buildOnceAndOutput() {
   try {
     const info = await buildOnce();
     logCompiledEntryPoint(info);
-  } catch (info) {
+  }
+  catch (info) {
     logCompilationErrors(info);
 
     throw new Error('Could not compile.');
   }
 }
 
-function setupWatcher() {
+function setupWatcher(args: ICompilationArgs) {
   const setupServerOnce = once(setupServer);
   setupFileWatcher((error, stats) => {
       if (error || stats.hasErrors()) {
@@ -35,19 +44,20 @@ function setupWatcher() {
       }
       else {
         logCompiledEntryPoint(stats);
-        setupServerOnce();
+        setupServerOnce(args);
       }
-    }
+    },
   );
 }
 
 async function main() {
-  if (process.argv.includes('-w')) {
-    setupWatcher();
+  const args = getArguments(process.argv);
+  if (args.watch) {
+    setupWatcher(args);
   }
   else {
-    await compileAndOutput();
-    setupServer();
+    await buildOnceAndOutput();
+    setupServer(args);
   }
 }
 
