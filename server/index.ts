@@ -1,15 +1,27 @@
 import { Stats } from 'webpack';
-import { prettyString } from '../common/utils/prettyPrint';
-import { getArguments } from './src/arguments';
+import {
+  prettyPrint,
+  prettyString,
+} from '../common/utils/prettyPrint';
+import {
+  CmdArguments,
+  getArguments,
+  reportArgConflicts,
+} from './src/arguments';
 import {
   buildOnce,
   setupFileWatcher,
 } from './src/build/buildWebpack';
+import { compilePugToHTML } from './src/build/compilePugToHTML';
 import {
-  ICompilationArgs,
-  setupServer,
-} from './src/serverSetup';
+  CustomElementInformation,
+  gatherCustomElementsInformation,
+} from './src/build/customElementInfo';
+import { ICompilationArgs } from './src/build/ICompilationArgs';
+import { setupServer } from './src/serverSetup';
 import { once } from '../common/utils/once';
+
+const setupServerOnce = once(setupServer);
 
 const logCompiledEntryPoint = (stats: Stats): void => {
   console.log('\n\nCompiled successfully: ');
@@ -21,43 +33,68 @@ const logCompiledEntryPoint = (stats: Stats): void => {
 
 const logCompilationErrors = (stats: Stats): void => {
   console.log('\n\nCompilation failed:\n\n');
-  console.log(stats.compilation.errors);
+  console.log(stats.toJson({
+    // errorDetails: true,
+    errors: true,
+  }));
 };
 
-async function buildOnceAndOutput() {
+const buildOnceAndOutput = async (customElementsInformation: ReadonlyArray<CustomElementInformation>) => {
   try {
-    const info = await buildOnce();
+    const info = await buildOnce(customElementsInformation);
     logCompiledEntryPoint(info);
   }
   catch (info) {
     logCompilationErrors(info);
 
-    throw new Error('Could not compile.');
+    throw new Error('Could not compile typescript or styles.');
   }
-}
+};
 
-function setupWatcher(args: ICompilationArgs) {
-  const setupServerOnce = once(setupServer);
-  setupFileWatcher((error, stats) => {
+const setupWatcher = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments) => {
+  setupFileWatcher(customElementsInformation, (error, stats) => {
       if (error || stats.hasErrors()) {
         logCompilationErrors(stats);
       }
       else {
         logCompiledEntryPoint(stats);
-        setupServerOnce(args);
+        if (args.server) {
+          setupServerOnce(customElementsInformation, args);
+        }
       }
     },
   );
-}
+};
+
+const compileToHTML = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: ICompilationArgs) => {
+  await buildOnceAndOutput(customElementsInformation);
+  try {
+    const results = await compilePugToHTML(customElementsInformation, args);
+    prettyPrint(results);
+  }
+  catch (hopefullySomeUsefulInfo) {
+    prettyPrint(hopefullySomeUsefulInfo);
+  }
+};
+
 
 async function main() {
   const args = getArguments(process.argv);
+  reportArgConflicts(args);
+
+  const customElementsInformation = gatherCustomElementsInformation();
+
   if (args.watch) {
-    setupWatcher(args);
+    setupWatcher(customElementsInformation, args);
   }
   else {
-    await buildOnceAndOutput();
-    setupServer(args);
+    if (args.compile) {
+      await compileToHTML(customElementsInformation, args);
+    }
+    else if (args.buildOnce) {
+      await buildOnceAndOutput(customElementsInformation);
+    }
+    setupServerOnce(customElementsInformation, args);
   }
 }
 

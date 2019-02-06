@@ -4,14 +4,16 @@ import webpack, {
   Output,
   Stats,
 } from 'webpack';
-import { webpackConfig } from './webpack.config';
-import path from 'path';
+import {
+  OutputFilePath,
+  ScriptBundleFileName,
+} from './constants';
+import {
+  CustomElementInformation,
+} from './customElementInfo';
+import { getWebpackConfig } from './getWebpackConfig';
 import Handler = webpack.MultiCompiler.Handler;
 
-const StylesheetBundleFileName = 'bundle.css';
-const ScriptBundleFileName = 'bundle.js';
-const PathToCustomElements = path.join(__dirname, '../client/custom-elements');
-const OutputFilePath = path.join(PathToCustomElements, '../../built/custom-elements');
 
 
 function deleteFolder(folderPath) {
@@ -37,38 +39,15 @@ function filterProps(key, value) {
   return value;
 }
 
-function getEntries(): Entry {
-  const customElementsDir = fs.readdirSync(PathToCustomElements);
-  const webpackEntries = customElementsDir.reduce((entries, elementName) => {
-    const elementDirFullPath = path.join(PathToCustomElements, elementName);
-    if (fs.lstatSync(elementDirFullPath).isDirectory()) {
-      const elementFiles = fs.readdirSync(elementDirFullPath);
-      const tsFiles = elementFiles
-        .filter(filename => filename.endsWith('.ts') || filename.endsWith('.tsx'))
-        .map(filename => path.join(elementDirFullPath, filename));
-      return {
-        ...entries,
-        [elementName]: tsFiles,
-      };
-    }
-    return entries;
+function getEntries(customElementsInformation: ReadonlyArray<CustomElementInformation>): Entry {
+  const webpackEntries = customElementsInformation.reduce((entries, elementInfo) => {
+    return {
+      ...entries,
+      [elementInfo.name]: elementInfo.entryPoints,
+    };
   }, {});
 
   return webpackEntries;
-}
-
-export function getBuiltCssPath(elementName: string) {
-  return path.join(OutputFilePath, elementName, StylesheetBundleFileName);
-}
-
-export function getBuiltCssSrc(_elementName: string) {
-  return path.join(StylesheetBundleFileName)
-    .replace('\\', '/');
-}
-
-export function getBuiltJsSrc(_elementName: string) {
-  return path.join(ScriptBundleFileName)
-    .replace('\\', '/');
 }
 
 function getOutput(): Output {
@@ -80,10 +59,10 @@ function getOutput(): Output {
   return webpackOutput;
 }
 
-export async function buildOnce(): Promise<Stats> {
+export async function buildOnce(customElementsInformation: ReadonlyArray<CustomElementInformation>): Promise<Stats> {
   deleteFolder('./built');
-  const webpackConfiguration = Object.assign({}, webpackConfig, {
-    entry: getEntries(),
+  const webpackConfiguration = Object.assign({}, getWebpackConfig(), {
+    entry: getEntries(customElementsInformation),
     output: getOutput(),
   });
 
@@ -103,10 +82,10 @@ export async function buildOnce(): Promise<Stats> {
 }
 
 
-export function setupFileWatcher(handler: Handler): void {
+export function setupFileWatcher(customElementsInformation: ReadonlyArray<CustomElementInformation>, handler: Handler): void {
   deleteFolder('./built');
-  const webpackConfiguration = Object.assign({}, webpackConfig, {
-    entry: getEntries(),
+  const webpackConfiguration = Object.assign({}, getWebpackConfig(), {
+    entry: getEntries(customElementsInformation),
     output: getOutput(),
   });
 

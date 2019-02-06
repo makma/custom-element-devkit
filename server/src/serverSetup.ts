@@ -1,19 +1,16 @@
 import express from 'express';
-import path from 'path';
 import fs from 'fs';
 import https from 'https';
-import {
-  getBuiltCssPath,
-  getBuiltCssSrc,
-  getBuiltJsSrc,
-} from './build/buildWebpack';
+import { prettyString } from '../../common/utils/prettyPrint';
+import { CmdArguments } from './arguments';
+import { CustomElementInformation } from './build/customElementInfo';
 
-export interface ICompilationArgs {
-  readonly inlineJs: boolean;
-  readonly inlineStyles: boolean;
-}
 
-export const setupServer = (_compilationArgs: ICompilationArgs): void => {
+export const setupServer = (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments): void => {
+  if (!args.server) {
+    return;
+  }
+
   const app = express();
 
   app.set('view engine', 'pug');
@@ -33,25 +30,26 @@ export const setupServer = (_compilationArgs: ICompilationArgs): void => {
   app.get('/custom-elements/:elementName', (req, res) => {
     const { elementName } = req.params;
 
-    const stylesheetPath = getBuiltCssPath(elementName);
-    const viewDir = path.join(__dirname, '../client/custom-elements', elementName);
-    const viewPath = path.join(viewDir, 'index');
+    const elementInfo = customElementsInformation.find(element => element.name === elementName);
+    if (elementInfo) {
+      if (!fs.existsSync(elementInfo.viewFilePath)) {
+        res.send(prettyString({
+          problem: `The referred custom element's view does not exist.`,
+          elementName,
+          path: req.path,
+          pathOfTheViewNotFound: elementInfo.viewFilePath,
+        }));
+      }
+      else {
+        const stylesheet = fs.readFileSync(elementInfo.stylesheetFilePath);
+        console.log(elementInfo.viewPath);
 
-    if (!fs.existsSync(`${viewPath}.pug`)) {
-      res.send(JSON.stringify({
-        problem: 'The referred custom element does not exist.',
-        path: req.path,
-        pathOfTheViewNotFound: `${viewPath}.pug`,
-      }, null, 4));
-    }
-    else {
-      const stylesheet = fs.readFileSync(stylesheetPath);
-      console.log(viewPath);
-      res.render(viewPath, {
-        stylesheet,
-        stylesheetSrc: getBuiltCssSrc(elementName),
-        scriptSrc: getBuiltJsSrc(elementName),
-      });
+        res.render(elementInfo.viewPath, {
+          stylesheet,
+          stylesheetSrc: elementInfo.stylesheetSrc,
+          scriptSrc: elementInfo.scriptSrc,
+        });
+      }
     }
   });
 

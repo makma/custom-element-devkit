@@ -10,11 +10,15 @@ html
       link(rel='stylesheet', href=stylesheetSrc)
     else
       style
-        | !{stylesheet}
+        | !{inlineStylesheet}
     script(src='https://app.kenticocloud.com/js-api/custom-element.js')
 
   body
     block content
       .content
     block script
-      script(src=scriptSrc)
+      if(scriptSrc)
+        script(src=scriptSrc)
+      else
+        script
+          | !{inlineScript}
