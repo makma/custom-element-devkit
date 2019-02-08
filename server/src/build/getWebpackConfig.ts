@@ -7,6 +7,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 type StyleLoaders = {
   cssLoaders: Array<Loader>;
   lessLoaders: Array<Loader>;
+  stylusLoaders: Array<Loader>;
 };
 
 const getStyleLoaders = (): StyleLoaders => {
@@ -19,10 +20,12 @@ const getStyleLoaders = (): StyleLoaders => {
     }, 'postcss-loader',
   ];
   const lessLoaders = cssLoaders.concat(['less-loader']);
+  const stylusLoaders = cssLoaders.concat('stylus-loader');
 
   return {
     cssLoaders,
     lessLoaders,
+    stylusLoaders,
   };
 };
 
@@ -45,6 +48,7 @@ export const getWebpackConfig = (): Configuration => {
   const {
     cssLoaders,
     lessLoaders,
+    stylusLoaders,
   } = wrapAllInExtractText(getStyleLoaders());
 
   return {
@@ -72,6 +76,10 @@ export const getWebpackConfig = (): Configuration => {
         {
           test: /\.less$/i,
           use: lessLoaders,
+        },
+        {
+          test: /\.styl$/i,
+          use: stylusLoaders,
         },
         {
           test: /\.svg$/,

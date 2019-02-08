@@ -50,6 +50,8 @@
     "react-set-state-usage": "^2.0.1",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
     "ts-node": "^8.0.2",
     "tslint": "^5.12.1",
     "tslint-react": "^3.6.0",

@@ -37,14 +37,12 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
    If several files are present, it should work in theory, but make sure they don't reference each other. In such case they would probably be included more than once. I need to try this out.
 
-1) The stylesheet is in '.less' or '.css' format and is imported from within the typescript code.
-
-   I might add stylus support in the future. I know it's way cooler than less, but I needed less for the x-data-spreadsheet package. 
+1) The stylesheet is in ['.less'](http://lesscss.org/), ['.styl' (stylus)](http://stylus-lang.com/) or ['.css'](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works) format and is imported from within the typescript code.
 
 ## Plans
 1) Add options to inline CSS and JS into server's HTML output - DONE
 1) Add compilation into HTML - DONE
    1) With or without CSS and JS inlining - DONE
-1) Add stylus support
+1) Add stylus support - DONE
 1) Better usage guide
 1) Hot reload if possible
