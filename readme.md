@@ -55,10 +55,14 @@ This will result in a structure built according to several conventions:
 
 1) The stylesheet is in ['.less'](http://lesscss.org/), ['.styl' (stylus)](http://stylus-lang.com/) or ['.css'](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works) format and is imported from within the typescript code.
 
+### Using a custom element in Kentico Cloud
+
+If you want to know everything about custom elements, [refer to our documentation](https://developer.kenticocloud.com/docs/integrating-content-editing-features).
+
+But you can simply test the custom element in Kentico Cloud, by configuring a Content type to have a Custom element linked to your locally hosted element, like this:
+![Custom element configuration.](./assets/custom-element-configuration.png)
+
+Then go to the inventory and create an item based on the type with the custom element.
+
 ## Plans
-1) Add options to inline CSS and JS into server's HTML output - DONE
-1) Add compilation into HTML - DONE
-   1) With or without CSS and JS inlining - DONE
-1) Add stylus support - DONE
-1) Better usage guide
 1) Hot reload if possible
