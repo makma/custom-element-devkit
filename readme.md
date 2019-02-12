@@ -1,5 +1,4 @@
 # Custom elements for Kentico Cloud
-##### (The best headless CMS in the cloud)
 
 This repository contains several (at least one... Hey it's a start.) custom content elements for the [Kentico Cloud](https://kenticocloud.com/) platform.
 

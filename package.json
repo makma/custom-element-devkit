@@ -1,7 +1,7 @@
 {
   "name": "custom-element-devkit",
   "version": "0.0.1",
-  "description": "A custom element devkit for the best headless CMS in the cloud.",
+  "description": "A custom element devkit for Kentico Cloud the headless CMS in the cloud.",
   "main": "server/index.ts",
   "scripts": {
     "build": "ts-node server/index.ts -c",
