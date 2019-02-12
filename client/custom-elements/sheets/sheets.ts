@@ -10,9 +10,20 @@ const updateDataInCloud = debounce((data: SheetData) => {
 }, 300);
 
 CustomElement.init((element, _context) => {
+  let value: SheetData = tryParseJSON(element.value || '', {});
   CustomElement.setHeight(((element.config || {}) as any).height || 400);
   document.querySelector('#spreadsheet-root')!.innerHTML = '';
-  new Spreadsheet('#spreadsheet-root', element.config || {})
-    .loadData(tryParseJSON(element.value || '', {}))
-    .change(updateDataInCloud);
+  const sheet = new Spreadsheet('#spreadsheet-root', element.config || {});
+  sheet.loadData(value);
+  const keepTheSameValue = () => sheet.loadData(value);
+  const saveValue = (data: SheetData) => {
+    value = data;
+    updateDataInCloud(data);
+  };
+  sheet.change(element.disabled ? keepTheSameValue : saveValue);
+
+  CustomElement.onDisabledChanged(disabled => {
+    value = sheet.data;
+    sheet.change(disabled ? keepTheSameValue : saveValue);
+  });
 });

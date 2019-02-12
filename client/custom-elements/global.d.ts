@@ -17,7 +17,8 @@ type Context = {
 };
 
 declare const CustomElement: {
-  init(callback: (element: CustomElement, context: Context) => void): void;
-  setValue(value: string): void;
-  setHeight(value: number): void;
+  readonly init: (callback: (element: CustomElement, context: Context) => void) => void;
+  readonly setValue: (value: string) => void;
+  readonly setHeight: (value: number) => void;
+  readonly onDisabledChanged: (callback: (disabled: boolean) => void) => void;
 };

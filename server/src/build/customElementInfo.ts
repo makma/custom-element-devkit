@@ -16,13 +16,13 @@ const getBuiltJsPath = (elementName: string) =>
 const getBuiltHTMLPath = (elementName: string) =>
   path.join(OutputFilePath, elementName, HTMLFileName);
 
-const getBuiltCssSrc = (_elementName: string) =>
-  path.join(StylesheetBundleFileName)
-    .replace('\\', '/');
+const getBuiltCssSrc = (elementName: string) =>
+  `/${path.join('custom-elements', elementName, StylesheetBundleFileName)
+    .replace('\\', '/')}`;
 
-const getBuiltJsSrc = (_elementName: string) =>
-  path.join(ScriptBundleFileName)
-    .replace('\\', '/');
+const getBuiltJsSrc = (elementName: string) =>
+  `/${path.join('custom-elements', elementName, ScriptBundleFileName)
+    .replace('\\', '/')}`;
 
 const PathToCustomElements = path.join(__dirname, '../../../client/custom-elements');
 
