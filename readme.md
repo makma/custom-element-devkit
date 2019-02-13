@@ -57,12 +57,22 @@ This will result in a structure built according to several conventions:
 
 ### Using a custom element in Kentico Cloud
 
+Of course you'll need to build the elements and start the server before you can use it. From the previous instructions, you know you can do that by running `npm start -- -hw`(starts a watcher) or `npm start -- -hb` (only builds once).
+
 If you want to know everything about custom elements, [refer to our documentation](https://developer.kenticocloud.com/docs/integrating-content-editing-features).
 
 But you can simply test the custom element in Kentico Cloud, by configuring a Content type to have a Custom element linked to your locally hosted element, like this:
 ![Custom element configuration.](./assets/custom-element-configuration.png)
 
 Then go to the inventory and create an item based on the type with the custom element.
+
+### Using the custom element in production
+
+Once you're happy with your work and your custom element works as intended, you can compile it into one HTML file with the styles and scripts inlined directly in the file. This ensures the browser loads just one file with one swift request. Provided the caching is setup correctly, the browser might not even issue the request.
+
+By running `npm start -- -cjs` you'll create the HTML file per element in _<repo-folder>\built\custom-elements\\<element-name>\index.html_. You can serve this file from any hosting as a static file.
+
+Running this server in production is not recommended, as the HTTPS server is not secure, because it's using a self-signed certificate.
 
 ## Plans
 1) Hot reload if possible
