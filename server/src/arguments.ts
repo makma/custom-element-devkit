@@ -47,11 +47,11 @@ export const reportArgConflicts = (args: CmdArguments): void => {
   if (args.minify && !(args.buildOnce || args.watch || args.compile)) {
     console.warn(`The option '-m, --minify' will have no effect in absence of option '-w, --watch' or '-b, --build-once' or '-c, --compile'.`);
   }
-  if (args.port && !args.server) {
+  if (argParser.port && !args.server) {
     console.warn(`The option '-p, --port' will have no effect in absence of option '-h, --server'.`);
   }
 
-  const hasAnyOptionBeenSpecified = Object.keys(argParser.opts()).reduce((anOptionSpecified, optionName) => anOptionSpecified || args[optionName], false);
+  const hasAnyOptionBeenSpecified = Object.keys(argParser.opts()).reduce((anOptionSpecified, optionName) => anOptionSpecified || argParser[optionName], false);
 
   if (!hasAnyOptionBeenSpecified) {
     argParser.outputHelp();

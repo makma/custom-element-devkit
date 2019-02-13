@@ -17,7 +17,7 @@ If you're familiar with the CMS, but would like to know more about custom elemen
 
 `npm run start-watcher` will start the node server and a compiler watching for changes in the files compiled for the client-side. This is useful when you're trying to create or debug your custom elements.
 
-If you leave this running on a publicly accessible server, you'll be able to use all the elements served by the server in the cloud. The URL is in this format: `<the root to your instance>/custom-elements/<element name>`.
+If you leave this running on a publicly accessible server, you'll be able to use all the elements served by the server in the cloud. The URL is in this format: `<the root to your instance>/custom-elements/<element name>`. However this is not recommended for security reasons.
 
 What `<element name>` stands for is dealt with below, read on.
 
@@ -73,9 +73,13 @@ Then go to the inventory and create an item based on the type with the custom el
 
 Once you're happy with your work and your custom element works as intended, you can compile it into one HTML file with the styles and scripts inlined and minified directly in the HTML file. This ensures the browser loads just one file with one swift request. Provided the caching is setup correctly, the browser might not even issue the request.
 
-By running `npm start -- -cjsm` you'll create the HTML file per element in _<repo-folder>\built\custom-elements\\<element-name>\index.html_. You can serve this file from any hosting as a static file.
+By running `npm start -- -cjsm` you'll create the HTML file per element in _<repo-folder>\built\custom-elements\<element-name>\index.html_. You can serve this file from any hosting as a static file.
 
 Running this server in production is not recommended, as the HTTPS server is not secure, because it's using a self-signed certificate.
+
+## The server and compilation
+
+If you're interested in how this dev-kit works, what is it that the server does and all of the inner works of the compilation, [read on here](./server/readme.md).
 
 ## Plans
 1) Hot reload if possible

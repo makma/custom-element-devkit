@@ -1,10 +1,12 @@
 import express from 'express';
 import fs from 'fs';
 import https from 'https';
-import { prettyString } from '../../common/utils/prettyPrint';
+import * as path from 'path';
+import { prettyPrint } from '../../common/utils/prettyPrint';
 import { CmdArguments } from './arguments';
 import { getRenderArgs } from './build/compilePugToHTML';
 import { CustomElementInformation } from './build/customElementInfo';
+import { getFailedRequestInfo } from './getFailedRequestInfo';
 
 
 export const setupServer = (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments): void => {
@@ -24,35 +26,27 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
     next();
   });
 
-  app.get('/', (_req, res) => {
-    res.send('hello world');
-  });
-
-  app.get('/custom-elements/:elementName', (req, res) => {
+  app.get('/custom-elements/:elementName', (req, res, next) => {
     const { elementName } = req.params;
 
     const elementInfo = customElementsInformation.find(element => element.name === elementName);
-    if (elementInfo) {
-      if (!fs.existsSync(elementInfo.viewFilePath)) {
-        res.send(prettyString({
-          problem: `The referred custom element's view does not exist.`,
-          elementName,
-          path: req.path,
-          pathOfTheViewNotFound: elementInfo.viewFilePath,
-        }));
-      }
-      else {
-        console.log(elementInfo.viewPath);
+    if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
+      console.log(elementInfo.viewPath);
 
-        res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args));
-      }
+      res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args));
+    }
+    else {
+      next();
     }
   });
 
   app.use(express.static('built'));
 
-  app.get('*', (_req, res) => {
-    res.send(`I have no idea, what you're trying to do.`);
+  app.all('*', (req, res) => {
+    const reqInfo = getFailedRequestInfo(req);
+    prettyPrint(reqInfo);
+    res.statusCode = 404;
+    res.render(path.join(__dirname, '../views/request-info'), reqInfo);
   });
 
   https.createServer({
