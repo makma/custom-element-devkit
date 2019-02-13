@@ -31,8 +31,6 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
 
     const elementInfo = customElementsInformation.find(element => element.name === elementName);
     if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
-      console.log(elementInfo.viewPath);
-
       res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args));
     }
     else {

@@ -54,6 +54,20 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
     stylusLoaders,
   } = wrapAllInExtractText(getStyleLoaders());
 
+  const plugins = [
+    new ExtractTextPlugin({
+      filename: '[name]/bundle.css',
+    }),
+  ];
+
+  if (minify) {
+    plugins.push(new OptimizeCssPlugin({
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }],
+      },
+    }));
+  }
+
   const webpackConfig: Configuration = {
     mode: minify ? 'production' : 'development',
     devtool: minify ? undefined : 'cheap-module-source-map',
@@ -88,16 +102,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
         },
       ],
     },
-    plugins: [
-      new ExtractTextPlugin({
-        filename: '[name]/bundle.css',
-      }),
-      new OptimizeCssPlugin({
-        cssProcessorPluginOptions: {
-          preset: ['default', { discardComments: { removeAll: true } }],
-        },
-      }),
-    ],
+    plugins,
     node: {
       __filename: true,
     },

@@ -48,14 +48,19 @@ export const gatherCustomElementsInformation = (): ReadonlyArray<CustomElementIn
   return customElementNames.map(name => {
     const elementDirFullPath = path.join(PathToCustomElements, name);
     const elementFiles = fs.readdirSync(elementDirFullPath);
-    const tsFiles = elementFiles
-      .filter(filename => filename.endsWith('.ts') || filename.endsWith('.tsx'))
+    const entryFiles = elementFiles
+      .filter(filename => /\.(j|t)sx?/.test(filename))
       .map(filename => path.join(elementDirFullPath, filename));
+
+    if (entryFiles.length <= 0) {
+      throw new Error(`There's no entry point for element '${name}'. Add a javascript or typescript file.`);
+    }
+
     const directoryPath = path.join(PathToCustomElements, name);
 
     return {
       directoryPath,
-      entryPoints: tsFiles,
+      entryPoints: entryFiles,
       name,
       viewFilePath: path.join(directoryPath, 'index.pug'),
       viewPath: path.join(directoryPath, 'index'),

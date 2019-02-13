@@ -2,16 +2,18 @@ doctype html
 html
   head(lang='en')
     meta(charset='UTF-8')
-    title=title
+    title !{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes')
     // styles
     block stylesheet
-    if(stylesheetSrc)
-      link(rel='stylesheet', href=stylesheetSrc)
-    else
-      style
-        | !{inlineStylesheet}
+      if(stylesheetSrc)
+        link(rel='stylesheet', href=stylesheetSrc)
+      else
+        style
+          | !{inlineStylesheet}
     script(src='https://app.kenticocloud.com/js-api/custom-element.js')
+
+    block head-extension
 
   body
     block content
