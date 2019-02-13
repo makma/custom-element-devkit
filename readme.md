@@ -68,9 +68,9 @@ Then go to the inventory and create an item based on the type with the custom el
 
 ### Using the custom element in production
 
-Once you're happy with your work and your custom element works as intended, you can compile it into one HTML file with the styles and scripts inlined directly in the file. This ensures the browser loads just one file with one swift request. Provided the caching is setup correctly, the browser might not even issue the request.
+Once you're happy with your work and your custom element works as intended, you can compile it into one HTML file with the styles and scripts inlined and minified directly in the HTML file. This ensures the browser loads just one file with one swift request. Provided the caching is setup correctly, the browser might not even issue the request.
 
-By running `npm start -- -cjs` you'll create the HTML file per element in _<repo-folder>\built\custom-elements\\<element-name>\index.html_. You can serve this file from any hosting as a static file.
+By running `npm start -- -cjsm` you'll create the HTML file per element in _<repo-folder>\built\custom-elements\\<element-name>\index.html_. You can serve this file from any hosting as a static file.
 
 Running this server in production is not recommended, as the HTTPS server is not secure, because it's using a self-signed certificate.
 

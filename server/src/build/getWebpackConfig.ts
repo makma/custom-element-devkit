@@ -1,8 +1,11 @@
 import {
   Configuration,
+  Entry,
   Loader,
+  Output,
 } from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import OptimizeCssPlugin from 'optimize-css-assets-webpack-plugin';
 
 type StyleLoaders = {
   cssLoaders: Array<Loader>;
@@ -44,20 +47,18 @@ const wrapAllInExtractText = (loaderObject: StyleLoaders): StyleLoaders => {
 };
 
 
-export const getWebpackConfig = (): Configuration => {
+export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean): Configuration => {
   const {
     cssLoaders,
     lessLoaders,
     stylusLoaders,
   } = wrapAllInExtractText(getStyleLoaders());
 
-  return {
-    mode: 'none',
-    devtool: 'cheap-module-source-map',
-    entry: 'Will be modified in buildWebpack.ts',
-    output: {
-      // 'Will be modified in buildWebpack.ts'
-    },
+  const webpackConfig: Configuration = {
+    mode: minify ? 'production' : 'development',
+    devtool: minify ? undefined : 'cheap-module-source-map',
+    entry: entries,
+    output,
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
     },
@@ -91,14 +92,16 @@ export const getWebpackConfig = (): Configuration => {
       new ExtractTextPlugin({
         filename: '[name]/bundle.css',
       }),
+      new OptimizeCssPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      }),
     ],
     node: {
       __filename: true,
     },
-    optimization: {
-      // minimize is handled by plugins config
-      minimize: false,
-    },
-    watch: true,
   };
+
+  return webpackConfig;
 };

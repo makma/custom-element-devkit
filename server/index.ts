@@ -17,7 +17,6 @@ import {
   CustomElementInformation,
   gatherCustomElementsInformation,
 } from './src/build/customElementInfo';
-import { ICompilationArgs } from './src/build/ICompilationArgs';
 import { setupServer } from './src/serverSetup';
 import { once } from '../common/utils/once';
 
@@ -33,15 +32,14 @@ const logCompiledEntryPoint = (stats: Stats): void => {
 
 const logCompilationErrors = (stats: Stats): void => {
   console.log('\n\nCompilation failed:\n\n');
-  console.log(stats.toJson({
-    // errorDetails: true,
+  console.log((typeof stats.toJson === 'function') ? stats.toJson({
     errors: true,
-  }));
+  }) : stats);
 };
 
-const buildOnceAndOutput = async (customElementsInformation: ReadonlyArray<CustomElementInformation>) => {
+const buildOnceAndOutput = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments) => {
   try {
-    const info = await buildOnce(customElementsInformation);
+    const info = await buildOnce(customElementsInformation, { minify: args.minify });
     logCompiledEntryPoint(info);
   }
   catch (info) {
@@ -63,11 +61,11 @@ const setupWatcher = async (customElementsInformation: ReadonlyArray<CustomEleme
         }
       }
     },
-  );
+    { minify: args.minify });
 };
 
-const compileToHTML = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: ICompilationArgs) => {
-  await buildOnceAndOutput(customElementsInformation);
+const compileToHTML = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments) => {
+  await buildOnceAndOutput(customElementsInformation, args);
   try {
     const results = await compilePugToHTML(customElementsInformation, args);
     prettyPrint(results);
@@ -92,7 +90,7 @@ async function main() {
       await compileToHTML(customElementsInformation, args);
     }
     else if (args.buildOnce) {
-      await buildOnceAndOutput(customElementsInformation);
+      await buildOnceAndOutput(customElementsInformation, args);
     }
     setupServerOnce(customElementsInformation, args);
   }

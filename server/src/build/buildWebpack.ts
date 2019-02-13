@@ -14,7 +14,9 @@ import {
 import { getWebpackConfig } from './getWebpackConfig';
 import Handler = webpack.MultiCompiler.Handler;
 
-
+export type BuildOptions = {
+  minify: boolean;
+};
 
 function deleteFolder(folderPath) {
   if (fs.existsSync(folderPath)) {
@@ -59,12 +61,9 @@ function getOutput(): Output {
   return webpackOutput;
 }
 
-export async function buildOnce(customElementsInformation: ReadonlyArray<CustomElementInformation>): Promise<Stats> {
+export async function buildOnce(customElementsInformation: ReadonlyArray<CustomElementInformation>, options: BuildOptions): Promise<Stats> {
   deleteFolder('./built');
-  const webpackConfiguration = Object.assign({}, getWebpackConfig(), {
-    entry: getEntries(customElementsInformation),
-    output: getOutput(),
-  });
+  const webpackConfiguration = getWebpackConfig(getEntries(customElementsInformation), getOutput(), options.minify);
 
   console.log(`Webpack configuration:`);
   console.log(JSON.stringify(webpackConfiguration, filterProps, 2));
@@ -82,12 +81,9 @@ export async function buildOnce(customElementsInformation: ReadonlyArray<CustomE
 }
 
 
-export function setupFileWatcher(customElementsInformation: ReadonlyArray<CustomElementInformation>, handler: Handler): void {
+export function setupFileWatcher(customElementsInformation: ReadonlyArray<CustomElementInformation>, handler: Handler, options: BuildOptions): void {
   deleteFolder('./built');
-  const webpackConfiguration = Object.assign({}, getWebpackConfig(), {
-    entry: getEntries(customElementsInformation),
-    output: getOutput(),
-  });
+  const webpackConfiguration = getWebpackConfig(getEntries(customElementsInformation), getOutput(), options.minify);
 
   console.log(`Webpack configuration:`);
   console.log(JSON.stringify(webpackConfiguration, filterProps, 2));
