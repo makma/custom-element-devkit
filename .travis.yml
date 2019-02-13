@@ -1,0 +1,10 @@
+dist: trusty
+language: node_js
+node_js:
+- "stable"
+before_script:
+- npm install
+script:
+- npm run typecheck
+- npm run tslint
+- npm run build
