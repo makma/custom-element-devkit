@@ -59,7 +59,7 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
     key: fs.readFileSync('server/credentials/server.key'),
     cert: fs.readFileSync('server/credentials/server.cert'),
   }, app)
-    .listen(3000, function () {
-      console.log('Example app listening on port 3000! Go to https://localhost:3000/');
+    .listen(args.port, function () {
+      console.log(`Example app listening on port ${args.port}! Go to https://localhost:${args.port}/`);
     });
 };

@@ -6,6 +6,7 @@ export type CmdArguments = {
   readonly inlineJs: boolean;
   readonly inlineStyles: boolean;
   readonly minify: boolean;
+  readonly port: number;
   readonly server: boolean;
   readonly watch: boolean;
 };
@@ -17,12 +18,19 @@ const argParser = commander
   .option('-h, --server', 'Start the https server.', false)
   .option('-j, --inline-js', 'Indicate whether you want to inline JS into the served HTML.', false)
   .option('-m, --minify', 'Will minify styles and script.', false)
+  .option('-p, --port <n>', 'Set a custom port to run the server on. (Default: 3000)', parseInt)
   .option('-s, --inline-styles', 'Indicate whether you want to inline styles in the served HTML.', false)
   .option('-w, --watch', 'Indicate whether you want to recompile after client files change.', false)
 ;
 
 export const getArguments = (argv: Array<string>): CmdArguments => {
-  const args = argParser.parse(argv);
+  let args = argParser.parse(argv).opts();
+  if (!args.port) {
+    args = {
+      ...args,
+      port: 3000,
+    };
+  }
   return args as any as CmdArguments;
 };
 
@@ -38,6 +46,9 @@ export const reportArgConflicts = (args: CmdArguments): void => {
   }
   if (args.minify && !(args.buildOnce || args.watch || args.compile)) {
     console.warn(`The option '-m, --minify' will have no effect in absence of option '-w, --watch' or '-b, --build-once' or '-c, --compile'.`);
+  }
+  if (args.port && !args.server) {
+    console.warn(`The option '-p, --port' will have no effect in absence of option '-h, --server'.`);
   }
 
   const hasAnyOptionBeenSpecified = Object.keys(argParser.opts()).reduce((anOptionSpecified, optionName) => anOptionSpecified || args[optionName], false);
