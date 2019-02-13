@@ -3,7 +3,7 @@
 [![Build Status](https://api.travis-ci.org/Kentico/custom-element-devkit.svg?branch=master)](https://travis-ci.org/Kentico/custom-element-devkit)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b164a3ac97987595ddf4/maintainability)](https://codeclimate.com/github/Kentico/custom-element-devkit/maintainability)
 
-This repository contains several (at least one... Hey it's a start.) custom content elements for the [Kentico Cloud](https://kenticocloud.com/) platform.
+This repository contains several custom content elements for the [Kentico Cloud](https://kenticocloud.com/) platform.
 
 If you want more information on Kentico Cloud, [head here](https://kenticocloud.com/docs-and-tutorials), or [contact us via email](mailto:cloud@kentico.com).
 
