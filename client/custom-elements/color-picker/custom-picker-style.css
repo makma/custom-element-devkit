@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+}
+
+
+div.color-picker-box {
+	width: 100%;
+	padding: 30px 0 30px 0;
+	text-align: center;
+	z-index: 1;
+}
+
+
+.color-picker.static {
+	display: inline-block !important;
+	position: static !important;
+	top: 0 !important;
+	left: 0 !important;
+}
+
+
+.disabled_overlay {
+	position: fixed;
+	z-index: 10;
+	cursor: not-allowed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}

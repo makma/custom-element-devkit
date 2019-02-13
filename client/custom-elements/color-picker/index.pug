@@ -1,0 +1,12 @@
+﻿extends ../../../server/views/custom-element-layout
+
+
+block head-extension
+  - var title = 'Color Picker';
+  script(src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js')
+
+block content
+  // Custom element HTML
+  .disabled_overlay
+  .color-picker-box
+    section#color-picker
