@@ -1,4 +1,4 @@
-# Custom elements for Kentico Cloud
+# Development Kit for Custom Elements in Kentico Cloud
 
 [![Build Status](https://api.travis-ci.org/Kentico/custom-element-devkit.svg?branch=master)](https://travis-ci.org/Kentico/custom-element-devkit)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b164a3ac97987595ddf4/maintainability)](https://codeclimate.com/github/Kentico/custom-element-devkit/maintainability)
