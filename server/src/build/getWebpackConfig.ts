@@ -100,6 +100,13 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
           test: /\.(svg|png)$/,
           use: 'url-loader',
         },
+        {
+          test: /\.woff$/,
+          loader: 'file-loader',
+          options: {
+            name: '/[path][name].[ext]',
+          },
+        },
       ],
     },
     plugins,

@@ -62,6 +62,7 @@
     "x-data-spreadsheet": "^1.0.3"
   },
   "dependencies": {
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "file-loader": "^3.0.1"
   }
 }
