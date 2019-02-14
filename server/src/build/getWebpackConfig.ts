@@ -97,7 +97,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
           use: stylusLoaders,
         },
         {
-          test: /\.svg$/,
+          test: /\.(svg|png)$/,
           use: 'url-loader',
         },
       ],
