@@ -100,7 +100,9 @@ class FakeCustomElement implements ICustomElement {
     }
 
     (window as any).customElement.height = height;
-    (window.top as any).setHeight(height);
+    if (window.top && (window.top as any).setHeight) {
+      (window.top as any).setHeight(height);
+    }
   }
 }
 
