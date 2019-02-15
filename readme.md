@@ -46,6 +46,8 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
 1) (Optional) If you'd like to use Kentico provided [custom-element.css](https://github.com/Kentico/custom-element-samples/blob/master/shared/custom-element.css) along with [Kentico icon-set](https://github.com/Kentico/custom-element-samples/blob/master/shared/kentico-icons-v1.6.0.woff), just import the provided [_client/shared/custom-module.css_](./client/shared/custom-module.css). The icon-set is linked from within there in a way that allows it to be loaded by the browser.
 
+   If done from the entry-point piece of script the line will likely look like this: `import '../../shared/custom-module.css';`. This will ensure the bundler includes the styles and copies the font into the _built_ folder, so that both are available to your custom element.
+
 1) Start the server using `npm start -- -hw`. This will start a _https:_ server on your machine on the port 3000. The address of your custom element is then: _https:\//localhost:3000/custom-elements/<element-name>_
 
 This will result in a structure built according to several conventions:
