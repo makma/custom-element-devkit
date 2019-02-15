@@ -7349,6 +7349,13 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 
+.content-item-element__item-metadata {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
 .content-item-element {
 	background-color: #fff;
 	border-radius: 2px;
@@ -7438,8 +7445,6 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 .content-item-element__label {
 	display: inline;
-	margin-right: 8px;
-	margin-bottom: 8px;
 	font-weight: 700;
 	color: #424242
 }
@@ -18441,6 +18446,11 @@ input[type=checkbox]:disabled {
 .switch-wrapper {
 	display: flex;
 	align-items: center
+}
+
+
+.switch-wrapper--inline {
+	display: inline-flex;
 }
 
 
