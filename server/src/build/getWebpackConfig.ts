@@ -7,6 +7,7 @@ import {
 } from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import OptimizeCssPlugin from 'optimize-css-assets-webpack-plugin';
+import { CustomElementsFolderName } from './constants';
 
 type StyleLoaders = {
   cssLoaders: Array<Loader>;
@@ -53,6 +54,12 @@ const getCustomElementApiMockEntry = () => {
   };
 };
 
+const getCustomElementWrapperEntry = () => {
+  return {
+    'custom-element-wrapper': path.join(__dirname, '../../../client/custom-element-wrapper/index.ts'),
+  };
+};
+
 
 export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean): Configuration => {
   const {
@@ -63,7 +70,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
 
   const plugins = [
     new ExtractTextPlugin({
-      filename: '[name]/bundle.css',
+      filename: `${CustomElementsFolderName}/[name]/bundle.css`,
     }),
   ];
 
@@ -78,7 +85,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
   const webpackConfig: Configuration = {
     mode: minify ? 'production' : 'development',
     devtool: minify ? undefined : 'cheap-module-source-map',
-    entry: Object.assign({}, entries, getCustomElementApiMockEntry()),
+    entry: Object.assign({}, entries, getCustomElementApiMockEntry(), getCustomElementWrapperEntry()),
     output,
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],
@@ -111,7 +118,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
           test: /\.woff$/,
           loader: 'file-loader',
           options: {
-            name: '/[path][name].[ext]',
+            name: '/[name].[ext]',
           },
         },
       ],

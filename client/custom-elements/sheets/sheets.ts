@@ -1,4 +1,5 @@
 import './stylesheet.styl';
+import '../../shared/custom-module.css';
 import Spreadsheet from 'x-data-spreadsheet';
 import { debounce } from '../../../common/utils/debounce';
 import { tryParseJSON } from '../../../common/utils/utils';

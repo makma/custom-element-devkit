@@ -1,0 +1,135 @@
+doctype html
+html
+  head(lang='en')
+    meta(charset='UTF-8')
+    title Kentico Cloud Custom Element
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes')
+    link(rel='stylesheet', href=stylesheetSrc)
+
+  body
+    .app
+      .app__main-menu
+        .main-menu
+          .main-menu__content
+            .main-menu__links-pane
+              a.main-menu__link.main-menu__link--is-active(aria-current='page', data-ui-nav='content-inventory', href='#')
+                span.tooltip-balloon(data-tooltip-orientation='right') Content & Assets
+                i.icon-content-and-assets.main-menu__link-icon(aria-hidden='true')
+              a.main-menu__link(data-ui-nav='content-models', href='#')
+                span.tooltip-balloon(data-tooltip-orientation='right') Content models
+                i.icon-content-models.main-menu__link-icon(aria-hidden='true')
+              a.main-menu__link(data-ui-nav='settings', href='#')
+                span.tooltip-balloon(data-tooltip-orientation='right') Project settings
+                i.icon-settings.main-menu__link-icon(aria-hidden='true')
+            .main-menu__tools-pane
+              .main-menu__tool.main-menu__resources.tether-target.tether-out-of-bounds.tether-out-of-bounds-left.tether-element-attached-bottom.tether-element-attached-right.tether-target-attached-bottom.tether-target-attached-left.tether-enabled(data-balloon='Documentation & Resources', data-balloon-pos='right', data-ui-action='open-docs-menu')
+                i.icon-resources.main-menu__link-icon(aria-hidden='true')
+              .main-menu__tool.user-menu.tether-target.tether-out-of-bounds.tether-out-of-bounds-left.tether-element-attached-bottom.tether-element-attached-right.tether-target-attached-bottom.tether-target-attached-left.tether-enabled(data-balloon='Vilem Kentico', data-balloon-pos='right', data-ui-action='open-user-menu', data-identifyelement='1')
+                .user-menu__initials VK
+      .app__view
+        .app__warnings-bar
+        .app__status-bar.status-bar
+          .status-bar__project
+            .status-bar__project-btn(data-ui-action='open-project-menu')
+              .status-bar__project-name() Enterprise project
+              i.status-bar__project-icon.icon-chevron-down(aria-hidden='true')
+              span.sr-only Switch domains
+          .status-bar__breadcrumbs
+            ul.breadcrumbs(data-ui-collection='breadcrumbs')
+              li.breadcrumbs__item(data-ui-object-id='Content & Assets')
+                a.breadcrumbs__item-name.breadcrumbs__item-name--is-clickable(href='#') Content & Assets
+              li.breadcrumbs__item-separator
+                i.icon-chevron-right(aria-hidden='true')
+              li.breadcrumbs__item(data-ui-object-id='Content')
+                a.breadcrumbs__item-name.breadcrumbs__item-name--is-clickable(href='#') Content
+              li.breadcrumbs__item-separator
+                i.icon-chevron-right(aria-hidden='true')
+              li.breadcrumbs__item
+                span.breadcrumbs__item-name.breadcrumbs__item-name--is-last() Custom Element Wrapper
+          .status-bar__plan-limit(data-ui-action='change-plan')
+            a.u-no-text-decoration(href='#')
+              .tag.tag--light-grey Enterprise plan
+        .app__canvas.canvas(data-ui-app='content-inventory')
+          .app__canvas.canvas(data-ui-app='content-item-editing')
+            .canvas__app-bar.app-bar
+              .app-bar__nav-pane
+                a(data-ui-action='navigate-back', href='#')
+                  i.app-bar__nav-icon.icon-back(aria-hidden='true')
+                  span.sr-only Go back
+              .app-bar__form-group
+                input.app-bar__text-field(autocomplete='off', type='text', maxlength='50', placeholder='Untitled content item', data-ui-input='item-name', data-ui-action='set-name', aria-label='Content item name', value='Custom Element Wrapper', disabled)
+              .app-bar__status-pane
+                .app-bar__status
+                  i.app-bar__status-icon.icon-success
+                  .app-bar__status-message(data-ui-element='status-message') All changes saved
+              .app-bar__utility-pane
+                .app-bar__tools-pane
+                  .app-bar__tool
+                    button.btn.btn--square.btn--secondary-inverted(data-balloon='Codename', data-balloon-pos='down-left', data-ui-action='get-codename')
+                      i.icon-codename(aria-hidden='true')
+                      span.sr-only Codename
+                  .codename__dialog.codename__dialog--is-over-app-bar
+                  .app-bar__tool
+                    button.btn.btn--square.btn--secondary-inverted(data-balloon='More actions', data-balloon-pos='down-left', data-ui-action='open-more-actions')
+                      i.icon-more-actions(aria-hidden='true')
+                      span.sr-only More actions
+                    div
+            .canvas__workspace
+              section.canvas__content
+                .canvas__content-pane.content-item-pane.flex.flex--center()
+                  .content-item-pane__elements-pane.flex-item--max-width--1000
+                    .content-item-pane__elements-list(data-ui-collection='content-elements', data-ui-active-capabilities='view,update-assignment,update')
+                      div(tabindex='-1', data-ui-object-id='Sheet', data-ui-element='custom-element')
+                        .content-item-element(data-ui-object-guid='b2937bf7-c433-4467-8e21-69a750a0ba46')
+                          .content-item-element__pane
+                            .content-item-element__item-metadata
+                              label.content-item-element__label
+                                | #{elementName}
+                              .tag.tag--blue.content-item-element__tag Custom element
+                            .content-item-element__item-content
+                              iframe#frame.custom-element__sandbox(src=elementSource, sandbox='allow-scripts allow-same-origin', height='200', width='100%')
+              aside.canvas__sidebar.canvas__sidebar--700.canvas__sidebar--right.canvas__sidebar--expanded
+                section.tabbed-ui
+                  .tabbed-ui__tabbed-navigation
+                    .tabbed-navigation.tabbed-navigation--in-sidebar
+                      nav.tabbed-navigation__tabs(data-ui-collection='tab-items-expanded')
+                        a.tabbed-navigation__tab.tabbed-navigation__tab--is-active(data-ui-object-id='details')
+                          span.tabbed-navigation__tab-title Details
+                        a.tabbed-navigation__tab(data-ui-object-id='comments')
+                          span.tabbed-navigation__tab-title Discussion
+                        a.tabbed-navigation__tab(data-ui-object-id='timeline')
+                          span.tabbed-navigation__tab-title Revisions
+                  .tabbed-ui__content
+                    div(data-ui-collection='item-detail-sections')
+                      .sidebar__section.sidebar__section--is-first-in-details-tab(data-ui-object-id='assignment')
+                        h2.sidebar__section-title Status
+                        .content-item-toolbar__workflow-status
+                          div
+                            .content-item-toolbar__workflow-status--current.content-item-toolbar__workflow-status--red.content-item-toolbar__workflow-status--current-only(data-ui-action='open-workflow-sidebar')
+                              .content-item-toolbar__workflow-status-name
+                                span Draft
+                                .content-item-toolbar__workflow-status-due-date No due date set
+                              span.content-item-toolbar__workflow-status-icon
+                                i.icon-chevron-right
+                      .sidebar__section.sidebar__section--contains-hover(data-ui-object-id='contributors')
+                        h2.sidebar__section-title.sidebar__section-title--is-clickable(data-ui-action='open-contributors-sidebar')
+                          | Contributors
+                          i.icon-edit.sidebar__section-title-contributors__icon-right(aria-hidden='true')
+                        ul.content-item-toolbar__contributors-list
+                          li.content-item-toolbar__contributor Awesome Developer
+                      .sidebar__section(data-ui-object-id='last-updated')
+                        h2.sidebar__section-title Last content change
+                        p.content-item-toolbar__info
+                          | 1 day ago
+                          span()  by Awesome Developer
+                      .sidebar__section(data-ui-object-id='content-type')
+                        h2.sidebar__section-title Content type
+                        p.content-item-toolbar__info() The one with a custom element
+                      .sidebar__section.sidebar__section--contains-hover(data-ui-object-id='usage')
+                        h2.sidebar__section-title Used in
+                        div
+                          .content-item-toolbar__info.content-item-toolbar__info--is-in-usages-section This content item is not used in any other content item.
+                  .tabbed-ui__footer
+                    .tabbed-navigation__footer-item.collapse-sidebar-button
+                      i.icon-chevron-right(aria-hidden='true')
+    script(src=scriptSrc)

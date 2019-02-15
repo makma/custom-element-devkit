@@ -55,7 +55,7 @@ function getCustomElementEntries(customElementsInformation: ReadonlyArray<Custom
 function getOutput(): Output {
   const webpackOutput: Output = {
     path: OutputFilePath,
-    filename: `[name]/${ScriptBundleFileName}`,
+    filename: `custom-elements/[name]/${ScriptBundleFileName}`,
   };
 
   return webpackOutput;

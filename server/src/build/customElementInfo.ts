@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import {
+  CustomElementsFolderName,
   HTMLFileName,
   OutputFilePath,
   ScriptBundleFileName,
@@ -8,23 +9,23 @@ import {
 } from './constants';
 
 const getBuiltCssPath = (elementName: string) =>
-  path.join(OutputFilePath, elementName, StylesheetBundleFileName);
+  path.join(OutputFilePath, CustomElementsFolderName, elementName, StylesheetBundleFileName);
 
 const getBuiltJsPath = (elementName: string) =>
-  path.join(OutputFilePath, elementName, ScriptBundleFileName);
+  path.join(OutputFilePath, CustomElementsFolderName, elementName, ScriptBundleFileName);
 
 const getBuiltHTMLPath = (elementName: string) =>
-  path.join(OutputFilePath, elementName, HTMLFileName);
+  path.join(OutputFilePath, CustomElementsFolderName, elementName, HTMLFileName);
 
 const getBuiltCssSrc = (elementName: string) =>
-  `/${path.join('custom-elements', elementName, StylesheetBundleFileName)
+  `/${path.join(CustomElementsFolderName, elementName, StylesheetBundleFileName)
     .replace('\\', '/')}`;
 
 const getBuiltJsSrc = (elementName: string) =>
-  `/${path.join('custom-elements', elementName, ScriptBundleFileName)
+  `/${path.join(CustomElementsFolderName, elementName, ScriptBundleFileName)
     .replace('\\', '/')}`;
 
-const PathToCustomElements = path.join(__dirname, '../../../client/custom-elements');
+const PathToCustomElements = path.join(__dirname, '../../../client', CustomElementsFolderName);
 
 export type CustomElementInformation = {
   readonly directoryPath: string;

@@ -5,9 +5,12 @@ import * as path from 'path';
 import { prettyPrint } from '../../common/utils/prettyPrint';
 import { CmdArguments } from './arguments';
 import { getRenderArgs } from './build/compilePugToHTML';
+import { CustomElementsFolderName } from './build/constants';
 import { CustomElementInformation } from './build/customElementInfo';
 import { getFailedRequestInfo } from './getFailedRequestInfo';
 
+const capitalize = (str: string): string => str.replace(/^\w/, c => c.toUpperCase());
+const wordify = (str: string): string => str.replace(/\W/g, ' ');
 
 export const setupServer = (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments): void => {
   if (!args.server) {
@@ -26,7 +29,7 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
     next();
   });
 
-  app.get('/custom-elements/:elementName', (req, res, next) => {
+  app.get(`/${CustomElementsFolderName}/:elementName`, (req, res, next) => {
     const { params: { elementName }, headers: { referer } } = req;
 
     const mockCustomElementApi = (referer || '').indexOf('inventory') < 0;
@@ -34,6 +37,23 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
     const elementInfo = customElementsInformation.find(element => element.name === elementName);
     if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
       res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args, mockCustomElementApi));
+    }
+    else {
+      next();
+    }
+  });
+
+  app.get(`/${CustomElementsFolderName}/:elementName/wrap`, (req, res, next) => {
+    const { params: { elementName } } = req;
+
+    const elementInfo = customElementsInformation.find(element => element.name === elementName);
+    if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
+      res.render(path.join(__dirname, '../views/custom-element-wrapper'), {
+        elementName: wordify(capitalize(elementName)),
+        elementSource: `/custom-elements/${elementName}`,
+        scriptSrc: '/custom-elements/custom-element-wrapper/bundle.js',
+        stylesheetSrc: '/custom-elements/custom-element-wrapper/bundle.css',
+      });
     }
     else {
       next();
