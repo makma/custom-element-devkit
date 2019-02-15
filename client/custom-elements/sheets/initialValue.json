@@ -1,0 +1,28 @@
+{
+  "freeze": [
+    0,
+    0
+  ],
+  "merges": [],
+  "rowm": {},
+  "colm": {},
+  "cellmm": {
+    "10": {
+      "5": {
+        "text": "sdsfgdfg"
+      }
+    },
+    "11": {
+      "5": {
+        "text": "dfgsdfg"
+      }
+    },
+    "12": {
+      "5": {
+        "text": "dsfgsdfg"
+      }
+    }
+  },
+  "styles": [],
+  "borders": []
+}

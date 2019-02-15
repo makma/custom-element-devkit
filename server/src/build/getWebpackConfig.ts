@@ -1,3 +1,4 @@
+import * as path from 'path';
 import {
   Configuration,
   Entry,
@@ -46,6 +47,12 @@ const wrapAllInExtractText = (loaderObject: StyleLoaders): StyleLoaders => {
   }), {}) as StyleLoaders;
 };
 
+const getCustomElementApiMockEntry = () => {
+  return {
+    'custom-element-api-mock': path.join(__dirname, '../../../client/custom-element-api-mock/index.ts'),
+  };
+};
+
 
 export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean): Configuration => {
   const {
@@ -71,7 +78,7 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
   const webpackConfig: Configuration = {
     mode: minify ? 'production' : 'development',
     devtool: minify ? undefined : 'cheap-module-source-map',
-    entry: entries,
+    entry: Object.assign({}, entries, getCustomElementApiMockEntry()),
     output,
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.less'],

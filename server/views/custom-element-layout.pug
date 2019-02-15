@@ -11,7 +11,17 @@ html
       else
         style
           | !{inlineStylesheet}
-    script(src='https://app.kenticocloud.com/js-api/custom-element.js')
+    script(src=customElementApiScriptSrc)
+
+    if(initialValue || config)
+      script.
+        window.customElement = {};
+    if(initialValue)
+      script.
+        window.customElement.value = `!{JSON.stringify(initialValue, null, 2)}`;
+    if(config)
+      script.
+        window.customElement.config = JSON.parse(`!{JSON.stringify(config, null, 2)}`);
 
     block head-extension
 

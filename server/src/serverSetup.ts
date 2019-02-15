@@ -27,11 +27,13 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
   });
 
   app.get('/custom-elements/:elementName', (req, res, next) => {
-    const { elementName } = req.params;
+    const { params: { elementName }, headers: { referer } } = req;
+
+    const mockCustomElementApi = (referer || '').indexOf('inventory') < 0;
 
     const elementInfo = customElementsInformation.find(element => element.name === elementName);
     if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
-      res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args));
+      res.render(elementInfo.viewPath, getRenderArgs(elementInfo, args, mockCustomElementApi));
     }
     else {
       next();

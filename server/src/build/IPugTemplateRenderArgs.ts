@@ -1,6 +1,9 @@
 export interface IPugTemplateRenderArgs {
+  customElementApiScriptSrc: string;
   inlineScript?: string;
-  scriptSrc?: string;
   inlineStylesheet?: string;
+  scriptSrc?: string;
   stylesheetSrc?: string;
+  initialValue?: string;
+  config?: string;
 }

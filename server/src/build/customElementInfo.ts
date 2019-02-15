@@ -29,8 +29,10 @@ const PathToCustomElements = path.join(__dirname, '../../../client/custom-elemen
 export type CustomElementInformation = {
   readonly directoryPath: string;
   readonly entryPoints: ReadonlyArray<string>;
-  readonly name: string;
   readonly htmlFilePath: string;
+  readonly initialValuePath: string;
+  readonly name: string;
+  readonly configPath: string;
   readonly scriptFilePath: string;
   readonly scriptSrc: string;
   readonly stylesheetFilePath: string;
@@ -63,6 +65,8 @@ export const gatherCustomElementsInformation = (): ReadonlyArray<CustomElementIn
       entryPoints: entryFiles,
       name,
       viewFilePath: path.join(directoryPath, 'index.pug'),
+      configPath: path.join(directoryPath, 'config.json'),
+      initialValuePath: path.join(directoryPath, 'initialValue.json'),
       viewPath: path.join(directoryPath, 'index'),
       scriptFilePath: getBuiltJsPath(name),
       scriptSrc: getBuiltJsSrc(name),

@@ -41,7 +41,7 @@ function filterProps(key, value) {
   return value;
 }
 
-function getEntries(customElementsInformation: ReadonlyArray<CustomElementInformation>): Entry {
+function getCustomElementEntries(customElementsInformation: ReadonlyArray<CustomElementInformation>): Entry {
   const webpackEntries = customElementsInformation.reduce((entries, elementInfo) => {
     return {
       ...entries,
@@ -63,7 +63,7 @@ function getOutput(): Output {
 
 export async function buildOnce(customElementsInformation: ReadonlyArray<CustomElementInformation>, options: BuildOptions): Promise<Stats> {
   deleteFolder('./built');
-  const webpackConfiguration = getWebpackConfig(getEntries(customElementsInformation), getOutput(), options.minify);
+  const webpackConfiguration = getWebpackConfig(getCustomElementEntries(customElementsInformation), getOutput(), options.minify);
 
   console.log(`Webpack configuration:`);
   console.log(JSON.stringify(webpackConfiguration, filterProps, 2));
@@ -83,7 +83,7 @@ export async function buildOnce(customElementsInformation: ReadonlyArray<CustomE
 
 export function setupFileWatcher(customElementsInformation: ReadonlyArray<CustomElementInformation>, handler: Handler, options: BuildOptions): void {
   deleteFolder('./built');
-  const webpackConfiguration = getWebpackConfig(getEntries(customElementsInformation), getOutput(), options.minify);
+  const webpackConfiguration = getWebpackConfig(getCustomElementEntries(customElementsInformation), getOutput(), options.minify);
 
   console.log(`Webpack configuration:`);
   console.log(JSON.stringify(webpackConfiguration, filterProps, 2));
