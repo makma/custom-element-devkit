@@ -47,6 +47,7 @@ class FakeCustomElement implements ICustomElement {
       },
       height: 'default',
     });
+    (window.top as any).customElement = (window as any).customElement;
   }
 
   private changeDisabledTo(value: boolean) {

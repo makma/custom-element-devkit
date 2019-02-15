@@ -85,6 +85,8 @@ html
                             .content-item-element__item-metadata
                               label.content-item-element__label
                                 | #{elementName}
+                              input#enabled(type='checkbox', checked=true)
+                              label(for='enabled') Enabled
                               .tag.tag--blue.content-item-element__tag Custom element
                             .content-item-element__item-content
                               iframe#frame.custom-element__sandbox(src=elementSource, sandbox='allow-scripts allow-same-origin', height='200', width='100%')

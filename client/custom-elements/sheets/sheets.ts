@@ -12,19 +12,27 @@ const updateDataInCloud = debounce((data: SheetData) => {
 
 CustomElement.init((element, _context) => {
   let value: SheetData = tryParseJSON(element.value || '', {});
+  let { disabled } = element;
   CustomElement.setHeight(((element.config || {}) as any).height || 400);
   document.querySelector('#spreadsheet-root')!.innerHTML = '';
   const sheet = new Spreadsheet('#spreadsheet-root', element.config || {});
   sheet.loadData(value);
+  const onChange = newValue => {
+    if (disabled) {
+      keepTheSameValue();
+    }
+    else {
+      saveValue(newValue);
+    }
+  };
   const keepTheSameValue = () => sheet.loadData(value);
   const saveValue = (data: SheetData) => {
     value = data;
     updateDataInCloud(data);
   };
-  sheet.change(element.disabled ? keepTheSameValue : saveValue);
+  sheet.change(onChange);
 
-  CustomElement.onDisabledChanged(disabled => {
-    value = sheet.data;
-    sheet.change(disabled ? keepTheSameValue : saveValue);
+  CustomElement.onDisabledChanged(newDisabled => {
+    disabled = newDisabled;
   });
 });
