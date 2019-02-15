@@ -54,6 +54,15 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
 1) Start the server using `npm start -- -hw`. This will start a _https:_ server on your machine on the port 3000. The address of your custom element is then: _https:\//localhost:3000/custom-elements/<element-name>_
 
+1) You can also view your custom element the way it would look in Kentico Cloud on the address _https:\//localhost:3000/custom-elements/<element-name>/wrap_
+
+   The sheets element looks like this in the wrapper:
+
+   ![Sheets in wrapper](./assets/sheets-in-wrapper.png)
+   
+   Pay attention to the browser console, as the mocked API for local debugging logs saved values and also makes an object representation of the custom element available in the variable `window.customElement`.
+
+
 This will result in a structure built according to several conventions:
 
 1) One element's files are located in _\<root\>/client/custom-elements/\<element name\>/_
