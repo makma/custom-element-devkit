@@ -17,6 +17,13 @@ CustomElement.init((element, _context) => {
   document.querySelector('#spreadsheet-root')!.innerHTML = '';
   const sheet = new Spreadsheet('#spreadsheet-root', element.config || {});
   sheet.loadData(value);
+
+  const keepTheSameValue = () => sheet.loadData(value);
+  const saveValue = (data: SheetData) => {
+    value = data;
+    updateDataInCloud(data);
+  };
+
   const onChange = newValue => {
     if (disabled) {
       keepTheSameValue();
@@ -24,11 +31,6 @@ CustomElement.init((element, _context) => {
     else {
       saveValue(newValue);
     }
-  };
-  const keepTheSameValue = () => sheet.loadData(value);
-  const saveValue = (data: SheetData) => {
-    value = data;
-    updateDataInCloud(data);
   };
   sheet.change(onChange);
 
