@@ -33,18 +33,18 @@ Put very simply, just follow the example. The "sheets" elements was the first on
 
 #### Step by step:
 
-1) Create a folder in _<root>/client_. Give it a name, you want your element to have. The folder name will be used in the element's URL, hence avoid white spaces or special characters.
+1) Create a folder in _<root>/client/custom-elements_. Give it a name, you want your element to have. The folder name will be used in the element's URL, hence avoid white spaces or special characters.
 
 1) In the folder, you have just created, create _index[.pug](https://pugjs.org/api/getting-started.html)_. Ideally make it [extend](https://pugjs.org/language/inheritance.html) the layout located in _../../../server/views/custom-element-layout_ relatively to the just created _index.pug_.
 
    If you decide to extend the provided layout, don't forget to specify the `block content` in order to provide the HTML basis for your custom element.
-1) Create a typescript file. Call it however you want.
+1) Create a typescript file. Best practice is to name the file after the extension (e.g. sheets.ts).
 
 1) If you'll need to have more typescript files, place them into a sub-folder.
 
 1) Create stylesheets in ['.less'](http://lesscss.org/), ['.styl' (stylus)](http://stylus-lang.com/) or ['.css'](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works) format. Import them from within any typescript file, in order for them to get compiled into a css file. If you're going to use an approach, that does not rely on an output css file, you don't need to do this.
 
-1) (Optional) If you'd like to use Kentico provided [custom-element.css](https://github.com/Kentico/custom-element-samples/blob/master/shared/custom-element.css) along with [Kentico icon-set](https://github.com/Kentico/custom-element-samples/blob/master/shared/kentico-icons-v1.6.0.woff), just import the provided [_client/shared/custom-module.css_](./client/shared/custom-module.css). The icon-set is linked from within there in a way that allows it to be loaded by the browser.
+1) (Optional) If you'd like to use Kentico provided [custom-element.css](https://github.com/Kentico/custom-element-samples/blob/master/shared/custom-element.css) along with [Kentico icon-set](https://github.com/Kentico/custom-element-samples/blob/master/shared/kentico-icons-v1.6.0.woff), just import the provided [_client/shared/custom-module.css_](./client/shared/custom-module.css) in your typescript file. The icon-set is linked from within there in a way that allows it to be loaded by the browser.
 
    If done from the entry-point piece of script the line will likely look like this: `import '../../shared/custom-module.css';`. This will ensure the bundler includes the styles and copies the font into the _built_ folder, so that both are available to your custom element.
    
