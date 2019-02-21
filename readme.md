@@ -40,7 +40,9 @@ Put very simply, just follow the example. The "sheets" elements was the first on
    If you decide to extend the provided layout, don't forget to specify the `block content` in order to provide the HTML basis for your custom element.
 1) Create a typescript file. Best practice is to name the file after the extension (e.g. sheets.ts).
 
-1) If you'll need to have more typescript files, place them into a sub-folder.
+1) If you need additional NPM packages, install them to the root of the devkit project.
+
+1) If you need to have more typescript files, place them into a sub-folder.
 
 1) Create stylesheets in ['.less'](http://lesscss.org/), ['.styl' (stylus)](http://stylus-lang.com/) or ['.css'](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works) format. Import them from within any typescript file, in order for them to get compiled into a css file. If you're going to use an approach, that does not rely on an output css file, you don't need to do this.
 
