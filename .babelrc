@@ -5,6 +5,7 @@
     [
       "@babel/env",
       {
+        "useBuiltIns": "usage",
         "modules": false
       }
     ]
