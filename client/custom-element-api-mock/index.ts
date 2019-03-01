@@ -67,6 +67,9 @@ class FakeCustomElement implements ICustomElement {
       throw Error('The provided value must be a string or null.');
     }
 
+    if (window.top && (window.top as any).storeValue) {
+        (window.top as any).storeValue(value);
+    }
     (window as any).customElement.value = value;
   }
 
@@ -79,8 +82,8 @@ class FakeCustomElement implements ICustomElement {
       cb(
         {
           config: (window as any).customElement.config || {},
-          disabled: false,
-          value: (window as any).customElement.value || null,
+          disabled: ((window.top as any).getDisabled() && (window.top as any).getDisabled()) || false,
+          value: (window as any).customElement.value || ((window.top as any).getValue && (window.top as any).getValue()) || null,
         },
         fakeContext);
     }, 500);

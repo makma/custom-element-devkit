@@ -85,13 +85,16 @@ html
                             .content-item-element__item-metadata
                               label.content-item-element__label
                                 | #{elementName}
-                              .switch-wrapper.switch-wrapper--inline.content-item-element__tag
+                              .switch-wrapper.switch-wrapper--inline.content-item-element__tag(data-balloon-pos="down", data-balloon="Change to see if custom elements correctly responds to enabled / disabled state")
                                 input#enabled(type='checkbox', checked, hidden)
                                 label.switch(for='enabled')
                                 span.switch__label Enabled
+                              div
+                                button.btn.btn--secondary.btn--xs#refresh(data-balloon-pos="down", data-balloon="Click to see if the saved value loads properly upon the next init") Refresh
+                                button.btn.btn--secondary.btn--xs#clear(data-balloon-pos="down", data-balloon="Click when changing contract to start over or test if empty value gets displayed correctly") Clear and refresh
                               .tag.tag--blue.content-item-element__tag Custom element
                             .content-item-element__item-content
-                              iframe#frame.custom-element__sandbox(src=elementSource, sandbox='allow-scripts allow-same-origin', height='200', width='100%')
+                              iframe#frame.custom-element__sandbox(src=elementSource, sandbox='allow-scripts allow-same-origin allow-forms', height='200', width='100%')
               aside.canvas__sidebar.canvas__sidebar--700.canvas__sidebar--right.canvas__sidebar--expanded
                 section.tabbed-ui
                   .tabbed-ui__tabbed-navigation
