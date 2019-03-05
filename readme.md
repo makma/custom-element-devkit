@@ -2,6 +2,7 @@
 
 [![Build Status](https://api.travis-ci.org/Kentico/custom-element-devkit.svg?branch=master)](https://travis-ci.org/Kentico/custom-element-devkit)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b164a3ac97987595ddf4/maintainability)](https://codeclimate.com/github/Kentico/custom-element-devkit/maintainability)
+[![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico-cloud)
 
 This repository contains several custom content elements for the [Kentico Cloud](https://kenticocloud.com/) platform.
 
