@@ -98,7 +98,7 @@ block content
 
 1) In the main `ts` or `tsx` file render the React component and hand over necessary properties like CustomElement to ensure the component can save its data into Kentico Cloud (e.g. `this.props.customElementApi.setValue(JSON.stringify(dto));`).
 
-```
+```javascript
 CustomElement.init((element, _context) => {
   ReactDom.render(<YourComponent disabled={element.disabled} customElementApi={CustomElement} />, document.querySelector('#reactapp'));
 });
