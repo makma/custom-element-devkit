@@ -78,6 +78,33 @@ This will result in a structure built according to several conventions:
 
 1) The stylesheet is in ['.less'](http://lesscss.org/), ['.styl' (stylus)](http://stylus-lang.com/) or ['.css'](https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works) format and is imported from within the typescript code.
 
+#### Using React.js
+If you wish to use React.js to implement your component, follow these steps:
+
+1) Install `react` and `react-dom` in the main folder
+
+1) Create a subfolder within your component folder for all React components (e.g. `/client/custom-elements/your-element/components`)
+
+1) Implement your custom element as React component. Use `tsx` suffix for all files that use JSX syntax.
+
+1) In the `pug` view file create a wrapping element for your React app
+
+```
+extends ../../../server/views/custom-element-layout
+
+block content
+	#reactapp
+```
+
+1) In the main `ts` or `tsx` file render the React component and hand over necessary properties like CustomElement to ensure the component can save its data into Kentico Cloud (e.g. `this.props.customElementApi.setValue(JSON.stringify(dto));`).
+
+```
+CustomElement.init((element, _context) => {
+  ReactDom.render(<YourComponent disabled={element.disabled} customElementApi={CustomElement} />, document.querySelector('#reactapp'));
+});
+```
+You can find example of custom element implemented using React.js in this repository: https://github.com/ondrabus/kc-country-selector/
+
 ### Using a custom element in Kentico Cloud
 
 Of course you'll need to build the elements and start the server before you can use it. From the previous instructions, you know you can do that by running `npm start -- -hw`(starts a watcher) or `npm start -- -hb` (only builds once).
