@@ -87,7 +87,7 @@ class FakeCustomElement implements ICustomElement {
       cb(
         {
           config: (window as any).customElement.config || {},
-          disabled: ((window.top as any).getDisabled() && (window.top as any).getDisabled()) || false,
+          disabled: ((window.top as any).getDisabled && (window.top as any).getDisabled()) || false,
           value: ((window.top as any).getValue && (window.top as any).getValue()) || null,
         },
         fakeContext);
