@@ -6,21 +6,21 @@ const setHeight = (height: number) => {
   frame!.setAttribute('height', height.toString());
 };
 
-let initialValueStored;
-
-const storeInitialValue = (value: string | null) => {
-  if (!initialValueStored) {
-    storeValue(value);
-    initialValueStored = true;
-  }
-};
-
 const storeValue = (value: string | null) => {
   if (value !== null) {
       localStorage.setItem('custom-element', value);
   }
   else {
       localStorage.removeItem('custom-element');
+  }
+};
+
+let initialValueStored;
+
+const storeInitialValue = (value: string | null) => {
+  if (!initialValueStored) {
+    storeValue(value);
+    initialValueStored = true;
   }
 };
 

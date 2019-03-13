@@ -79,8 +79,8 @@ class FakeCustomElement implements ICustomElement {
     }
 
     setTimeout(() => {
-      const initialValue = (window as any).customElement.initialValue;
-      if (initialValue && (window.top as any).storeInitialValue) {
+      const initialValue = (window as any).customElement.initialValue || null;
+      if ((window.top as any).storeInitialValue) {
         (window.top as any).storeInitialValue(initialValue);
       }
 
