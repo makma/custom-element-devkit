@@ -6,6 +6,15 @@ const setHeight = (height: number) => {
   frame!.setAttribute('height', height.toString());
 };
 
+let initialValueStored;
+
+const storeInitialValue = (value: string | null) => {
+  if (!initialValueStored) {
+    storeValue(value);
+    initialValueStored = true;
+  }
+};
+
 const storeValue = (value: string | null) => {
   if (value !== null) {
       localStorage.setItem('custom-element', value);
@@ -44,17 +53,21 @@ if (getDisabled()) {
     enabledInput!.removeAttribute('checked');
 }
 
+const refresh = () => {
+  (frame as any).contentWindow.location.replace((frame as any).contentWindow.location);
+};
+
 const clearBtn = document.querySelector('#clear');
 clearBtn!.addEventListener('click', (event) => {
     storeValue(null);
     if (event && event.target && event.target as HTMLElement) { (event.target as HTMLElement).blur(); }
-    window.location.href = window.location.href;
+    refresh();
 });
 
 const refreshBtn = document.querySelector('#refresh');
 refreshBtn!.addEventListener('click', (event) => {
     if (event && event.target && event.target as HTMLElement) { (event.target as HTMLElement).blur(); }
-    window.location.href = window.location.href;
+    refresh();
 });
 
-Object.assign(window, { setHeight, storeValue, getValue, getDisabled });
+Object.assign(window, { setHeight, storeInitialValue, storeValue, getValue, getDisabled });

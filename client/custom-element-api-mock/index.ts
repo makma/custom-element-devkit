@@ -79,11 +79,16 @@ class FakeCustomElement implements ICustomElement {
     }
 
     setTimeout(() => {
+      const initialValue = (window as any).customElement.initialValue;
+      if (initialValue && (window.top as any).storeInitialValue) {
+        (window.top as any).storeInitialValue(initialValue);
+      }
+
       cb(
         {
           config: (window as any).customElement.config || {},
           disabled: ((window.top as any).getDisabled() && (window.top as any).getDisabled()) || false,
-          value: (window as any).customElement.value || ((window.top as any).getValue && (window.top as any).getValue()) || null,
+          value: ((window.top as any).getValue && (window.top as any).getValue()) || null,
         },
         fakeContext);
     }, 500);
