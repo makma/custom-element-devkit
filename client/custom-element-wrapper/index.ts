@@ -60,14 +60,22 @@ const refresh = () => {
 const clearBtn = document.querySelector('#clear');
 clearBtn!.addEventListener('click', (event) => {
     storeValue(null);
-    if (event && event.target && event.target as HTMLElement) { (event.target as HTMLElement).blur(); }
+    if (event && event.target) { (event.target as HTMLElement).blur(); }
     refresh();
 });
 
 const refreshBtn = document.querySelector('#refresh');
 refreshBtn!.addEventListener('click', (event) => {
-    if (event && event.target && event.target as HTMLElement) { (event.target as HTMLElement).blur(); }
+    if (event && event.target) { (event.target as HTMLElement).blur(); }
     refresh();
 });
 
-Object.assign(window, { setHeight, storeInitialValue, storeValue, getValue, getDisabled });
+const DevKit = {
+  setHeight,
+  storeInitialValue,
+  storeValue,
+  getValue,
+  getDisabled,
+}
+
+Object.assign(window, { DevKit });
