@@ -76,6 +76,6 @@ const DevKit = {
   storeValue,
   getValue,
   getDisabled,
-}
+};
 
 Object.assign(window, { DevKit });
