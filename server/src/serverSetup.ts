@@ -50,7 +50,8 @@ export const setupServer = (customElementsInformation: ReadonlyArray<CustomEleme
     if (elementInfo && fs.existsSync(elementInfo.viewFilePath)) {
       res.render(path.join(__dirname, '../views/custom-element-wrapper'), {
         elementName: wordify(capitalize(elementName)),
-        elementSource: `/custom-elements/${elementName}`,
+        // Path needs to end with / because we need relative references from its page (/element-name/index) to be resolved correctly
+        elementSource: `/custom-elements/${elementName}/`,
         scriptSrc: '/custom-elements/custom-element-wrapper/bundle.js',
         stylesheetSrc: '/custom-elements/custom-element-wrapper/bundle.css',
       });

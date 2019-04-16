@@ -67,6 +67,11 @@ class FakeCustomElement implements ICustomElement {
       throw Error('The provided value must be a string or null.');
     }
 
+    const DevKit = (window.top) && (window.top as any).DevKit;
+
+    if (DevKit) {
+        DevKit.storeValue(value);
+    }
     (window as any).customElement.value = value;
   }
 
@@ -76,11 +81,18 @@ class FakeCustomElement implements ICustomElement {
     }
 
     setTimeout(() => {
+      const initialValue = (window as any).customElement.initialValue || null;
+      if ((window.top as any).DevKit) {
+        (window.top as any).DevKit.storeInitialValue(initialValue);
+      }
+
+      const DevKit = (window.top) && (window.top as any).DevKit;
+
       cb(
         {
           config: (window as any).customElement.config || {},
-          disabled: false,
-          value: (window as any).customElement.value || null,
+          disabled: (DevKit && DevKit.getDisabled()) || false,
+          value: (DevKit && DevKit.getValue()) || null,
         },
         fakeContext);
     }, 500);
@@ -100,8 +112,11 @@ class FakeCustomElement implements ICustomElement {
     }
 
     (window as any).customElement.height = height;
-    if (window.top && (window.top as any).setHeight) {
-      (window.top as any).setHeight(height);
+
+    const DevKit = (window.top) && (window.top as any).DevKit;
+
+    if (DevKit) {
+      DevKit.setHeight(height);
     }
   }
 }

@@ -111,14 +111,25 @@ export const getWebpackConfig = (entries: Entry, output: Output, minify: boolean
           use: stylusLoaders,
         },
         {
-          test: /\.(svg|png)$/,
-          use: 'url-loader',
-        },
-        {
           test: /\.woff$/,
           loader: 'file-loader',
           options: {
             name: '/[name].[ext]',
+          },
+        },
+        // Add media from imported libraries to the bundle, but not the ones from custom elements
+        {
+          test: /\.(svg|png)$/,
+          exclude: /custom-elements/,
+          use: 'url-loader',
+        },
+        // Media from custom elements go directly to the output folder so we can reference them by URL in custom element code
+        {
+          test: /\.(svg|png)$/,
+          include: /custom-elements/,
+          loader: 'file-loader',
+          options: {
+            name: '/custom-elements/[folder]/[name].[ext]',
           },
         },
       ],
