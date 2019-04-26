@@ -72,7 +72,7 @@ class FakeCustomElement implements ICustomElement {
     if (DevKit) {
         DevKit.storeValue(value);
     }
-    (window as any).customElement.value = value;
+    (window as any).customElement.initialValue = value;
   }
 
   public init(cb: (element: ICustomElementData, context: ICustomElementContext) => void): void {

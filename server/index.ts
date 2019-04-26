@@ -32,9 +32,7 @@ const logCompiledEntryPoint = (stats: Stats): void => {
 
 const logCompilationErrors = (stats: Stats): void => {
   console.log('\n\nCompilation failed:\n\n');
-  console.log((typeof stats.toJson === 'function') ? stats.toJson({
-    errors: true,
-  }) : stats);
+  console.log((typeof stats.toJson === 'function') ? stats.toJson('errors-only') : stats);
 };
 
 const buildOnceAndOutput = async (customElementsInformation: ReadonlyArray<CustomElementInformation>, args: CmdArguments) => {
